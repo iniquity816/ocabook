@@ -1,0 +1,279 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% The Legrand Orange Book
+% LaTeX Template
+% Version 3.1 (February 18, 2022)
+%
+% This template originates from:
+% https://www.LaTeXTemplates.com
+%
+% Authors:
+% Vel (vel@latextemplates.com)
+% Mathias Legrand (legrand.mathias@gmail.com)
+%
+% License:
+% CC BY-NC-SA 4.0 (https://creativecommons.org/licenses/by-nc-sa/4.0/)
+%
+% Compiling this template:
+% This template uses biber for its bibliography and makeindex for its index.
+% When you first open the template, compile it from the command line with the 
+% commands below to make sure your LaTeX distribution is configured correctly:
+%
+% 1) pdflatex main
+% 2) makeindex main.idx -s indexstyle.ist
+% 3) biber main
+% 4) pdflatex main x 2
+%
+% After this, when you wish to update the bibliography/index use the appropriate
+% command above and make sure to compile with pdflatex several times 
+% afterwards to propagate your changes to the document.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[
+	11pt, % Default font size, select one of 10pt, 11pt or 12pt
+	fleqn, % Left align equations
+	a4paper, % Paper size, use either 'a4paper' for A4 size or 'letterpaper' for US letter size
+	%oneside, % Uncomment for oneside mode, this doesn't start new chapters and parts on odd pages (adding an empty page if required), this mode is more suitable if the book is to be read on a screen instead of printed
+]{LegrandOrangeBook}
+
+% Book information for PDF metadata, remove/comment this block if not required 
+\hypersetup{
+	pdftitle={A World of Cellular Automata - Beneath the Surface}, % Title field
+	pdfauthor={iniquity816}, % Author field
+	pdfsubject={}, % Subject field
+	pdfkeywords={}, % Keywords
+	pdfcreator={LaTeX}, % Content creator field
+}
+
+\usepackage{hyperref}
+\usepackage{imakeidx}
+\makeindex[options=-s indexstyle]
+
+\addbibresource{sample.bib} % Bibliography file
+
+\usetikzlibrary{calc}
+
+\definecolor{ocre}{RGB}{127, 63, 255} % Define the color used for highlighting throughout the book
+\definecolor{black}{RGB}{0, 0, 0}
+\definecolor{grayish}{RGB}{127, 127, 127}
+
+\chapterimage{drylife.png} % Chapter heading image
+\chapterspaceabove{6.5cm} % Default whitespace from the top of the page to the chapter title on chapter pages
+\chapterspacebelow{6.75cm} % Default amount of vertical whitespace from the top margin to the start of the text on chapter pages
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\titlepage % Output the title page
+	{\includegraphics{bookcover.pdf}} % Code to output the background image, which should be the same dimensions as the paper to fill the page entirely; leave empty for no background image
+	{ % Title(s) and author(s)
+		\centering\sffamily % Font styling
+		{\Huge\bfseries A World of Cellular Automata\par} % Book title
+		\vspace{16pt} % Vertical whitespace
+		{\LARGE Beneath the Surface\par} % Subtitle
+		\vspace{24pt} % Vertical whitespace
+		{\huge\bfseries iniquity816\par} % Author name
+	}
+
+%----------------------------------------------------------------------------------------
+%	COPYRIGHT PAGE
+%----------------------------------------------------------------------------------------
+
+\thispagestyle{empty} % Suppress headers and footers on this page
+
+~\vfill % Push the text down to the bottom of the page
+
+\noindent Copyright \copyright\ 2026 iniquity816\\ % Copyright notice
+
+\noindent \textsc{Published by Myself :3}\\ % Publisher
+
+\noindent \textsc{\href{https://www.iniquity816.github.io/ocabook.html}{https://www.iniquity816.github.io/ocabook.html}}\\ % URL
+
+\noindent \textit{April Fools!!!!!!!!1} % Printing/edition date
+
+%----------------------------------------------------------------------------------------
+%	TABLE OF CONTENTS
+%----------------------------------------------------------------------------------------
+
+\pagestyle{empty} % Disable headers and footers for the following pages
+
+\tableofcontents % Output the table of contents
+
+%\listoffigures % Output the list of figures, comment or remove this command if not required
+
+%\listoftables % Output the list of tables, comment or remove this command if not required
+
+\pagestyle{fancy} % Enable default headers and footers again
+
+\cleardoublepage % Start the following content on a new page
+
+%----------------------------------------------------------------------------------------
+%	PART
+%----------------------------------------------------------------------------------------
+
+%\part{Part One Title}
+\frontmatter
+
+%----------------------------------------------------------------------------------------
+%	SECTIONING EXAMPLES CHAPTER
+%----------------------------------------------------------------------------------------
+
+%------------------------------------------------
+\phantomsection
+\section*{Preface}
+\addcontentsline{toc}{section}{Preface}
+\phantomsection
+\subsection*{Intentions}
+\addcontentsline{toc}{subsection}{Intentions}
+This book is intended to be an unofficial counterpart to \textit{Conway's Game of Life: Mathematics and Construction} by Nathaniel Johnston and Dave Greene (hereinafter "the Life book"), focusing on the large variety of cellular automata that allow for elementary objects and mechanisms that Life simply does not have.\footnote{Any object in any rule with a range-1 Moore neighbourhood, like Conway's Game of Life, can be emulated in Life using 0E0P metacells.}  Rules with a square tiling, being the most ubiquitous manifestation of cellular automata rules, are well-explored and are thus the main object of observation of this book, but rules on other, more novel tilings (such as the hexagonal and triangular tilings) are also included to present the world of cellular automata more objectively, and to perhaps foster exploration and a better understanding of these rules. Rules with larger ranges, such as those explored by Kellie Evans, are also present, but note that these rules become less easier to simulate as the range of the neighborhood, or the area of cells that can affect one cell, increases. The maximum range that can be simulated in most programs is 500.
+\phantomsection
+\subsection*{Prerequisites}
+\addcontentsline{toc}{subsection}{Prerequisites}
+It is assumed that you have the program Golly installed, available
+{\href{https://sourceforge.net/projects/golly/}{here}}, which natively facilitates the simulation of almost all rulespaces discussed in this book and enables the creation of scripts to achieve certain goals. Additionally, it is assumed that you are familiar with the Life book, which discusses ideas that mostly overlap with this book. Nothing else is required to use each program comfortably, but web resources can be used to broaden your knowledge if necessary.
+\phantomsection
+\subsection*{Usage}
+\addcontentsline{toc}{subsection}{Usage}
+Much like the Life book, this book is reliant on figures to illustrate patterns in a non-changing manner, which makes the visualisation of spaceships and other moving objects more difficult. Hence, cells that were alive in previous generations but are now dead (the "envelope" of the pattern) are highlighted blue to indicate change. This ensures the appearance of motion in moving objects and volatility in oscillators. Still lives, showing no movement or change from one generation to the next, are presented "as-is", without highlighting of any kind.
+\begin{figure}[H] % Use [H] to suppress floating and place the figure/table exactly where it is specified in the text
+	\centering % Horizontally center the figure on the page
+	\begin{subfigure}{0.3\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{p661.pdf} % Include the figure image
+		\caption{Period-661 oscillator in \texttt{B356/S23.}}
+		\label{fig:usage1} % Unique label used for referencing the figure in-text
+	\end{subfigure}
+	\hspace{1cm}
+	\begin{subfigure}{0.25\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{b38s23obliq.pdf} % Include the figure image
+		\caption{(5,2)\textit{c}/190 spaceship in \texttt{B38/S23}, run for 760 generations.}
+		\label{fig:usage2} % Unique label used for referencing the figure in-text
+	\end{subfigure}
+	\caption*{Examples of envelopes for an oscillator and a spaceship (each in their minimal phase, in terms of population), coloured using LifeHistory state colours.}
+	\label{fig:usage}
+\end{figure}Cells may also be given different colours as part of an exercise, which we will discuss below.
+\phantomsection
+\subsection*{Exercises}
+\addcontentsline{toc}{subsection}{Exercises}
+Exercises are also used to test one's knowledge and are placed at the end of each chapter. They are assigned difficulty ratings, ranging from Difficulty-1 (straightforward and often completed without much effort) to Difficulty-5 (projects that may take a day or two to complete). It is hoped that these exercises improve the breadth of one's knowledge and experience.
+\phantomsection
+\subsection*{Acknowledgements}
+\addcontentsline{toc}{subsection}{Acknowledgements}
+First and foremost, I would like to thank Nathaniel Johnston and Dave Greene, who directly inspired this book and indirectly motivated me to write it. 
+I extend thanks to David S. Miller, the forum user "FWKnightship", and  the creators of Golly (Andrew Trevorrow and Tomas Rokicki). Finally, I would like to thank Mathias Legrand and Velimir Gayevskiy, creators of the template \textit{Legrand Orange Book}, available at {\href{https://www.latextemplates.com/template/legrand-orange-book}{LaTeXTemplates.com}.
+%------------------------------------------------
+
+\chapterimage{vn.png} % Chapter heading image
+\chapterspaceabove{6.75cm} % Whitespace from the top of the page to the chapter title on chapter pages
+\chapterspacebelow{7.25cm} % Amount of vertical whitespace from the top margin to the start of the text on chapter pages
+
+\mainmatter
+
+%----------------------------------------------------------------------------------------
+%	IN-TEXT ELEMENT EXAMPLES CHAPTER
+%----------------------------------------------------------------------------------------
+\part{The Square Tiling}
+\chapter{The von Neumann Neighbourhood}
+The von Neumann neighbourhood, named after none other than John von Neumann (1903--1957), limits the number of neighbours a single cell can have to just the cells orthogonally adjacent to it. A 29-state rule with the von Neumann neighbourhood, devised by von Neumann in the 1940s with suggestions from Stanisław Ulam (1909--1984) to realise a \textbf{universal constructor}\index{universal construction} in the form of a \textbf{self-replicating machine}\index{replicator!self-replicating machine}, was the first example of a cellular automaton using this neighbourhood (and the first cellular automaton in general). The first implementation of his machine, using his original 29-state specification, would only come in 2007.\footnote{An earlier implementation by Renato Nobili and Umberto Pesavento in 1994 used a version of von Neumann's rule with 32 states. \cite{10.1162/artl.1995.2.4.337}}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=2]{vonneumann.pdf}
+	\caption{The von Neumann neighbourhood (in \textcolor{grayish}{grey}) of the central cell (in \textbf{black}).}
+	\label{fig:vnrange1}
+\end{figure}
+\section{Two-state von Neumann Rules}
+Two-state von Neumann rules are extremely limited; they require birth on 1 neighbour to expand outside their initial bounding box (but this, in turn, makes rules hopelessly explosive). A simple proof of this is provided below.
+[add proof]
+\section{Three-state von Neumann Rules}
+[insert shameless self plug here]
+\section{Circuitry Rules}
+All four Banks rules, Codd, Devore, Flow6, and von Neumann's constructor rule all use the von Neumann neighbourhood.
+[add pictures of Banks-I to Banks-IV, Codd, Devore, Flow6, and the Sphinx in action]
+\chapter{The Moore Neighbourhood}
+\section{Outer-Totalistic Rules}
+In outer-totalistic rules, only the number of alive cells a cell has matters (cells are born without consideration of the positions of the neighbours of the cell, relative to eachother). The Game of Life belongs to this family, and so does the variants Grounded Life (\texttt{B35/S23}), HighLife (\texttt{B36/S23}), DryLife (\texttt{B37/S23}), Pedestrian Life (\texttt{B38/S23}), EightLife (\texttt{B3/S238}), and HoneyLife (\texttt{B38/S238}). $2^{18}$ rules are in this family.
+
+%-----------------------------------------------
+
+%----------------------------------------------------------------------------------------
+
+\stopcontents[part] % Manually stop the 'part' table of contents here so the previous Part page table of contents doesn't list the following chapters
+
+%----------------------------------------------------------------------------------------
+%	BIBLIOGRAPHY
+%----------------------------------------------------------------------------------------
+
+\chapterimage{} % Chapter heading image
+\chapterspaceabove{2.5cm} % Whitespace from the top of the page to the chapter title on chapter pages
+\chapterspacebelow{2cm} % Amount of vertical whitespace from the top margin to the start of the text on chapter pages
+
+%------------------------------------------------
+
+\chapter*{Bibliography}
+\markboth{\sffamily\normalsize\bfseries Bibliography}{\sffamily\normalsize\bfseries Bibliography} % Set the page headers to display a Bibliography chapter name
+\addcontentsline{toc}{chapter}{\textcolor{ocre}{Bibliography}} % Add a Bibliography heading to the table of contents
+
+\section*{Articles}
+\addcontentsline{toc}{section}{Articles} % Add the Articles subheading to the table of contents
+
+\printbibliography[heading=bibempty, type=article] % Output article bibliography entries
+
+\section*{Books}
+\addcontentsline{toc}{section}{Books} % Add the Books subheading to the table of contents
+
+\printbibliography[heading=bibempty, type=book] % Output book bibliography entries
+
+%----------------------------------------------------------------------------------------
+%	INDEX
+%----------------------------------------------------------------------------------------
+
+\cleardoublepage % Make sure the index starts on an odd (right side) page
+\phantomsection
+\addcontentsline{toc}{chapter}{\textcolor{ocre}{Index}} % Add an Index heading to the table of contents
+\printindex % Output the index
+
+%----------------------------------------------------------------------------------------
+%	APPENDICES
+%----------------------------------------------------------------------------------------
+
+\chapterimage{orange2.jpg} % Chapter heading image
+\chapterspaceabove{6.75cm} % Whitespace from the top of the page to the chapter title on chapter pages
+\chapterspacebelow{7.25cm} % Amount of vertical whitespace from the top margin to the start of the text on chapter pages
+
+\begin{appendices}
+
+\renewcommand{\chaptername}{Appendix} % Change the chapter name to Appendix, i.e. "Appendix A: Title", instead of "Chapter A: Title" in the headers
+
+%------------------------------------------------
+
+\chapter{Appendix Chapter Title}
+
+\section{Appendix Section Title}
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam auctor mi risus, quis tempor libero hendrerit at. Duis hendrerit placerat quam et semper. Nam ultricies metus vehicula arcu viverra, vel ullamcorper justo elementum. Pellentesque vel mi ac lectus cursus posuere et nec ex. Fusce quis mauris egestas lacus commodo venenatis. Ut at arcu lectus. Donec et urna nunc. Morbi eu nisl cursus sapien eleifend tincidunt quis quis est. Donec ut orci ex. Praesent ligula enim, ullamcorper non lorem a, ultrices volutpat dolor. Nullam at imperdiet urna. Pellentesque nec velit eget est euismod pretium.
+
+%------------------------------------------------
+
+\chapter{Appendix Chapter Title}
+
+\section{Appendix Section Title}
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam auctor mi risus, quis tempor libero hendrerit at. Duis hendrerit placerat quam et semper. Nam ultricies metus vehicula arcu viverra, vel ullamcorper justo elementum. Pellentesque vel mi ac lectus cursus posuere et nec ex. Fusce quis mauris egestas lacus commodo venenatis. Ut at arcu lectus. Donec et urna nunc. Morbi eu nisl cursus sapien eleifend tincidunt quis quis est. Donec ut orci ex. Praesent ligula enim, ullamcorper non lorem a, ultrices volutpat dolor. Nullam at imperdiet urna. Pellentesque nec velit eget est euismod pretium.
+
+%------------------------------------------------
+
+\end{appendices}
+
+%----------------------------------------------------------------------------------------
+
+\end{document}
